@@ -1,0 +1,50 @@
+﻿@page "/reporting-hub"
+@using System.Text.Json
+@using System.Text.Json.Serialization;
+@using Common.Models;
+@using Common
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Authentication;
+@using System.Net.Http.Headers;
+@inject AccessTokenStorage tokenStorage
+@inject IHttpClientFactory ClientFactory
+@inject IConfiguration configuration;
+<h1>ReoprtingHub</h1>
+
+<p>Welcome to ReportingHub, you can generete a wide range of company reports and perform market anlaysis</p>
+
+<button class="btn btn-primary" @onclick="onGenerateSubscribersReportClick">Subsribers Report</button>
+
+@if (subscriberReport != null)
+{
+
+    <div>
+        <br />
+        <span>Subscribers:</span>
+        <span>@subscriberReport.SubscribersCount</span>
+    </div>
+}
+
+@code {
+    public SubscriberReport subscriberReport = null;
+
+    private async Task onGenerateSubscribersReportClick()
+    {
+        var token = await tokenStorage.GetTokenAsync();
+        var apiClient = ClientFactory.CreateClient();
+        apiClient.SetBearerToken(token);
+        var response = await apiClient.GetAsync($"{MicroServices.Reporting.Url}/SubscribersReport");
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            subscriberReport = JsonSerializer.Deserialize<SubscriberReport>(content, options);
+        }
+        else
+        {
+        }
+    }
+}
