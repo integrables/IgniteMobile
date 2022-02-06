@@ -37,7 +37,7 @@ namespace Reporting.Controllers
 
                     ClientId = MicroServices.Reporting.Id,
                     ClientSecret = "reporting_strong_password(!)",
-
+                    //comment
                     Scope = "subscribers.read",
                 });
             //match client regesitered id, secret and allowed scopes
