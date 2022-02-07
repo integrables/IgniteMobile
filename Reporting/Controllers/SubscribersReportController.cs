@@ -38,7 +38,8 @@ namespace Reporting.Controllers
                     ClientSecret = "reporting_strong_password(!)",
 
                     Scope = GetstringClass.GetScope(),
-                    //Scope = "subscribers.read",
+                    //Scope = "subscribers.read",//
+
 
 
                 });
