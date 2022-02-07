@@ -21,7 +21,7 @@ namespace Reporting.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
-
+        
         [HttpGet]
         public async Task<SubscriberReport> GenerateSubsribersReportAsync()
         {
@@ -29,7 +29,6 @@ namespace Reporting.Controllers
             var serverClient = _httpClientFactory.CreateClient();
 
             var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync(MicroServices.IdentitySuite.Url);
-
             var tokenResponse = await serverClient.RequestClientCredentialsTokenAsync(
                 new ClientCredentialsTokenRequest
                 {
@@ -38,7 +37,11 @@ namespace Reporting.Controllers
                     ClientId = MicroServices.Reporting.Id,
                     ClientSecret = "reporting_strong_password(!)",
 
-                    Scope = "subscribers.read",
+                    Scope = GetstringClass.GetScope(),
+                    //Scope = "subscribers.read",//
+
+
+
                 });
             //match client regesitered id, secret and allowed scopes
 
@@ -58,5 +61,14 @@ namespace Reporting.Controllers
 
             return report;
         }
+    }
+    public class GetstringClass
+    {
+        private static string s = "subscribers.read";
+        public static string GetScope()
+        {
+            return s;
+        }
+
     }
 }
