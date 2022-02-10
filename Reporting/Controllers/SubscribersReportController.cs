@@ -37,7 +37,7 @@ namespace Reporting.Controllers
                     ClientId = MicroServices.Reporting.Id,
                     ClientSecret = "reporting_strong_password(!)",
 
-                    Scope = GetstringClass.GetScope(),
+                    Scope = new GetstringClass().GetScope(),
                     //Scope = "subscribers.read",//
 
 
@@ -65,10 +65,9 @@ namespace Reporting.Controllers
     public class GetstringClass
     {
         private static string s = "subscribers.read";
-        public static string GetScope()
+        public string GetScope()
         {
             return s;
         }
-
     }
 }
