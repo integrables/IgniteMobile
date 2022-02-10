@@ -65,7 +65,7 @@ namespace Reporting.Controllers
     public class GetstringClass
     {
         private static string s = "subscribers.read";
-        public static string GetScope()
+        public static string ScopeString()
         {
             return s;
         }
